@@ -1,0 +1,29 @@
+csv_file_names:
+#  - 'game_plays.csv'
+#  - 'game.csv'
+#  - 'player_info.xls'
+#  - 'team_info.xls'
+#  - 'game_skater_stats.csv'
+#  - 'game_shifts.csv'
+#  - 'game_plays_players.csv'
+#  - 'game_goalie_stats.csv'
+#  - 'game_teams_stats.csv'
+  - 'game_penalties.csv'
+  - 'game_goals.csv'
+  - 'game_officials.csv'
+
+db_info:
+  user:
+    root
+  pw:
+    root
+  db:
+    nhl_db
+
+base_api:
+  https://statsapi.web.nhl.com/api/v1/
+
+
+
+
+
