@@ -10,8 +10,13 @@ class TestCsvToDb(unittest.TestCase):
     def setUpClass(cls):
         cls.csv_to_db = CsvToDb()
 
-    # @patch('pandas.read_csv')
-    # def test_read_csv_generator(self, mock_read):
+    @patch('pandas.read_csv')
+    def test_read_csv_generator_mock_read(self, mock_read):
+        filename = 'valid.csv'
+        for chunk in self.csv_to_db.read_csv_generator(filename, 100000):
+            pass
+        mock_read.assert_called_once_with(filename, chunksize=100000)
+        self.assertRaises(Exception, self.csv_to_db.read_csv_generator('invalid.txt', 1))
 
     @patch('pandas.DataFrame.to_sql')
     def test_process_chunk(self, mock_db):

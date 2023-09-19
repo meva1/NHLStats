@@ -18,9 +18,11 @@ class CsvToDb:
                                                    db=self.db))
 
     @staticmethod
-    def read_csv_generator(file_name):
+    def read_csv_generator(file_name, chunksize):
+        if file_name.split(".")[1] != 'csv':
+            raise Exception('Invalid file format')
         try:
-            for chunk in pd.read_csv(file_name, chunksize=100000):
+            for chunk in pd.read_csv(file_name, chunksize=chunksize):
                 yield chunk
         except IOError:
             return 'Encountered an IOError'
@@ -34,11 +36,8 @@ class CsvToDb:
 
     def process_all_files(self):
         with ThreadPoolExecutor() as ex:
-            many_futures = []
             for file_name in self.files_list:
                 futures = [ex.submit(self.process_chunk, chunk, file_name.split('.')[0])
-                           for chunk in self.read_csv_generator('RawData/{}'.format(file_name))]
-                many_futures.append(futures)
-            return many_futures
+                           for chunk in self.read_csv_generator('RawData/{}'.format(file_name), 100000)]
 
 
